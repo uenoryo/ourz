@@ -11,6 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Home
+Route::resource(
+    '/',
+    'HomeController',
+    [
+        'names' => [
+            'index' => 'home.index',
+        ],
+        'only' => ['index'],
+    ]
+);
