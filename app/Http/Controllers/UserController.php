@@ -18,6 +18,6 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('user/index');
+        return view('user/index')->with(['teams' => \Auth::user()->teams()->get()]);
     }
 }
