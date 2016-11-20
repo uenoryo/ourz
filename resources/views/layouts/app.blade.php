@@ -70,6 +70,11 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+                                    <li>
+                                        <a href="{{ url('/user') }}">
+                                            マイページ
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         @endif
@@ -77,7 +82,9 @@
                 </div>
             </div>
         </nav>
-
+        @if (Session::has('success'))
+            <div class="alert alert-success">{{ Session::get('success') }}</div>
+        @endif
         @yield('content')
     </div>
 

@@ -23,4 +23,30 @@ Route::resource(
     ]
 );
 
+// User
+Route::resource(
+    'user',
+    'UserController',
+    [
+        'only' => ['index'],
+    ]
+);
+
+// Team
+Route::resource(
+    'team',
+    'TeamController',
+    [
+        'only' => ['create', 'store'],
+    ]
+);
+Route::group(
+    [
+        'as' => 'team',
+    ],
+    function () {
+        Route::get('team/{name}', 'TeamController@index')->where('name', '^[0-9a-z-]+$');
+    }
+);
+
 Auth::routes();
