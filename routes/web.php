@@ -32,4 +32,13 @@ Route::resource(
     ]
 );
 
+// Team
+Route::resource(
+    'team',
+    'TeamController',
+    [
+        'only' => ['create', 'store'],
+    ]
+);
+
 Auth::routes();
