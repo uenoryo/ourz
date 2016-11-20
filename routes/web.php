@@ -23,4 +23,13 @@ Route::resource(
     ]
 );
 
+// User
+Route::resource(
+    'user',
+    'UserController',
+    [
+        'only' => ['index'],
+    ]
+);
+
 Auth::routes();
