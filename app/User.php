@@ -26,4 +26,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function teams()
+    {
+        return $this->belongsToMany('App\Models\Team', 'teams_users')->withTimestamps();
+    }
 }
