@@ -16,6 +16,10 @@ class TeamController extends Controller
         $this->middleware('auth');
     }
 
+    public function index($name){
+        return view('team/index')->with(['team' => Team::where(['name' => $name])->first()]);
+    }
+
     public function create()
     {
         return view('team/create');

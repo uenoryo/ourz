@@ -24,8 +24,8 @@
             </tr>
             @forelse($teams as $team)
             <tr>
-              <td>{{ $team->name }}</td>
-              <td>{{ $team->display }}</td>
+              <td><a href="{{ route('team', $team->name) }}">{{ $team->name }}</a></td>
+              <td><a href="{{ route('team', $team->name) }}">{{ $team->display }}</a></td>
             </tr>
             @empty
               <tr><td>チームはありません</td></tr>
