@@ -22,3 +22,5 @@ Route::resource(
         'only' => ['index'],
     ]
 );
+
+Auth::routes();
