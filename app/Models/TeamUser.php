@@ -15,4 +15,9 @@ class TeamUser extends Model
     {
         return $this->hasOne('App\Models\Member', 'teams_users_id');
     }
+
+    public function user()
+    {
+        return $this->hasOne('App\User', 'id');
+    }
 }

@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1'], function() {
+    Route::get('team/{id}/members', 'TeamController@members')->where('id', '^[0-9]+$');
+});
