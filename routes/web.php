@@ -32,10 +32,10 @@ Route::resource(
     ]
 );
 
-// Team
+// Team作成(UserController)
 Route::resource(
     'team',
-    'TeamController',
+    'UserController',
     [
         'only' => ['create', 'store'],
     ]

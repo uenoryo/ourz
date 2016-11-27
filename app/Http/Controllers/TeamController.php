@@ -3,47 +3,39 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 
 use App\Models\Team;
-use App\Models\TeamUser;
-use App\Models\Member;
-use App\Http\Requests\TeamStoreRequest;
 
 class TeamController extends Controller
 {
-    public function __construct()
+    private $team;
+    private $user;
+
+    public function __construct(Router $router)
     {
         $this->middleware('auth');
-    }
-
-    public function index($name){
-        return view('team/index')->with(['team' => Team::where(['name' => $name])->first()]);
-    }
-
-    public function create()
-    {
-        return view('team/create');
-    }
-
-    public function store(TeamStoreRequest $request)
-    {
-        $input = $request->only(['name', 'display']);
-
-        \DB::transaction(function () use ($input){
-            $team = Team::create([
-                'name'    => $input['name'],
-                'display' => $input['display'],
-            ]);
-            $team_user = TeamUser::create([
-                'team_id' => $team->id,
-                'user_id' => \Auth::user()->id,
-            ]);
-            Member::create([
-                'teams_users_id' => $team_user->id,
-                'priority'       => Member::PRIORITY_ROOT,
-            ]);
+        $this->middleware(function ($request, $next) use ($router) {
+            $name = $router->getCurrentRoute()->getParameter('name', '');
+            $this->team = Team::where(['name' => $name])->first();
+            $this->user = \Auth::user()->member($this->team->id);
+            if ($this->user->isWaiting()) {
+                \Session::flash('error', '承認待ちです');
+                return redirect()->route('user.index');
+            }
+            if (!$this->user->isAuthenticated()) {
+                \Session::flash('error', '承認されていません');
+                return redirect()->route('user.index');
+            }
+            return $next($request);
         });
-        \Session::flash('success', 'チームを作成しました');
-        return redirect()->route('user.index');
+    }
+
+    public function index($name)
+    {
+        return view('team/index')->with([
+            'team' => $this->team,
+            'user' => $this->user,
+        ]);
     }
 }
