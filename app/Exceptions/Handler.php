@@ -44,7 +44,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if (config('app.debug')) {
+        if (config('app.debug') && !$this->ignore($exception)) {
         $whoops = new \Whoops\Run;
         $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler());
 
@@ -72,5 +72,13 @@ class Handler extends ExceptionHandler
         }
 
         return redirect()->guest('login');
+    }
+
+    protected function ignore(Exception $exception)
+    {
+        foreach ($this->dontReport as $e) {
+           if ($exception instanceof $e) return true;
+        }
+        return false;
     }
 }

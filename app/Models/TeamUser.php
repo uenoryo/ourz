@@ -10,4 +10,9 @@ class TeamUser extends Model
     protected $fillable = [
         'team_id', 'user_id',
     ];
+
+    public function member()
+    {
+        return $this->hasOne('App\Models\Member', 'teams_users_id');
+    }
 }
