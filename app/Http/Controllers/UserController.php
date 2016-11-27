@@ -34,7 +34,7 @@ class UserController extends Controller
     {
         $input = $request->only(['name', 'display']);
 
-        \DB::transaction(function () use ($input){
+        \DB::transaction(function () use ($input) {
             $team = Team::create([
                 'name'    => $input['name'],
                 'display' => $input['display'],

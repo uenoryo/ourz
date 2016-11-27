@@ -11,6 +11,7 @@ class TeamController extends Controller
 {
     private $team;
     private $user;
+
     public function __construct(Router $router)
     {
         $this->middleware('auth');

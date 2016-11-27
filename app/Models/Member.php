@@ -23,6 +23,6 @@ class Member extends Model
 
     public function isWaiting()
     {
-        return $this->priority == self::PRIORITY_WAIT;
+        return $this->priority === self::PRIORITY_WAIT;
     }
 }
