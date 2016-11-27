@@ -31,4 +31,15 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Team', 'teams_users')->withTimestamps();
     }
+
+    public function teamUser()
+    {
+        return $this->hasMany('App\Models\TeamUser');
+    }
+
+    public function member(int $team_id)
+    {
+        $team_user = $this->teamUser()->where('team_id', $team_id)->first();
+        return isset($team_user) ? $team_user->member()->first() : null;
+    }
 }
