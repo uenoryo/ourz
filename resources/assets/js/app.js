@@ -18,13 +18,9 @@ const VueMaterial = require('vue-material');
 Vue.use(VueMaterial);
 Vue.material.theme.registerAll({
   default: {
-    primary: 'cyan',
+    primary: 'teal',
     accent: 'pink',
   },
-  indigo: {
-    primary: 'indigo',
-    accent: 'pink',
-  }
 });
 Vue.component('example', require('./components/Example.vue'));
 
