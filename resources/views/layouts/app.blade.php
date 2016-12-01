@@ -36,12 +36,12 @@
         <md-menu>
           <md-button md-menu-trigger>{{ Auth::user()->name }}</md-button>
           <md-menu-content>
-            <md-menu-item><a href="{{ url('/user') }}">マイページ</a></md-menu-item>
-            <md-menu-item>
-              <a
-                href="{{ url('/logout') }}"
-                onclick="event.preventDefault();document.getElementById('logout-form').submit();">ログアウト</a>
-            </md-menu-item>
+            <a href="{{ url('/user') }}"><md-menu-item>マイページ</md-menu-item></a>
+            <a
+              href="{{ url('/logout') }}"
+              onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+              <md-menu-item>ログアウト</md-menu-item>
+            </a>
           </md-menu-content>
         </md-menu>
         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
