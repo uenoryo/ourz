@@ -19,4 +19,5 @@ Route::get('/user', function (Request $request) {
 
 Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1'], function() {
     Route::get('team/{id}/members', 'TeamController@members')->where('id', '^[0-9]+$');
+    Route::post('team/{id}/document', 'DocumentController@create')->where('id', '^[0-9]+$');
 });
