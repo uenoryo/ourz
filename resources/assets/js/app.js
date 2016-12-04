@@ -13,8 +13,18 @@ require('./bootstrap');
  * the application, or feel free to tweak this setup for your needs.
  */
 
+const VueMaterial = require('vue-material');
+
+Vue.use(VueMaterial);
+Vue.material.theme.registerAll({
+  default: {
+    primary: 'teal',
+    accent: 'pink',
+  },
+});
 Vue.component('example', require('./components/Example.vue'));
+Vue.component('team-members', require('./components/team-members.vue'));
 
 const app = new Vue({
-    el: 'body'
+    el: '#app',
 });

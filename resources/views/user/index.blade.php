@@ -8,9 +8,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">{{ Auth::user()->name }}のページ</div>
         <div class="panel-body">
-          <a class="btn btn-primary" href="{{ url('/team/create') }}">
-            Create new Team
-          </a>
+          <md-button href="{{ url('/team/create') }}" class="md-raised md-primary">新しいチームを作成する</md-button>
         </div>
       </div>
 
