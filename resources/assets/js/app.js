@@ -23,8 +23,12 @@ Vue.material.theme.registerAll({
   },
 });
 Vue.component('example', require('./components/Example.vue'));
-Vue.component('team-members', require('./components/team-members.vue'));
 
 const app = new Vue({
-    el: '#app',
+  el: '#app',
+  showModal: false,
+  components: {
+    'create-document': require('./components/button/create-document.vue'),
+    'team-members': require('./components/team-members.vue'),
+  },
 });
