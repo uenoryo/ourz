@@ -18,6 +18,7 @@ class CreateDocumentsTable extends Migration
             $table->integer('team_id')->unsigned();
             $table->string('title');
             $table->text('body');
+            $table->softDeletes();
         });
     }
 
