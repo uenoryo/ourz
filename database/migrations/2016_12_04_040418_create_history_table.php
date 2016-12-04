@@ -16,6 +16,7 @@ class CreateHistoryTable extends Migration
         Schema::create('history', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('document_id')->unsigned();
+            $table->integer('member_id')->unsigned();
             $table->timestamp('created_at');
         });
     }
