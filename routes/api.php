@@ -18,5 +18,10 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1'], function() {
-    Route::get('team/{id}/members', 'TeamController@members')->where('id', '^[0-9]+$');
+    Route::get('team/{id}/members', 'TeamController@members')
+        ->where('id', '^[0-9]+$')
+        ->middleware('api');
+    Route::post('team/{id}/document', 'DocumentController@create')
+        ->where('id', '^[0-9]+$')
+        ->middleware('api');
 });
