@@ -9,11 +9,13 @@
             div.modal-header
               slot(name='header')
                 md-input-container
-                  md-input(v-model='data.title' placeholder='タイトルを入力')
+                  md-input(v-model='data.title' placeholder='タイトルを入力' required)
             div.modal-body
               slot(name='body')
                 md-input-container
-                  md-textarea(v-model='data.body')
+                  //- npm run prodでバグる
+                  //- md-textarea(v-model='data.body')
+                  textarea(v-model='data.body' required)
             div.modal-footer
               slot(name='footer')
                 md-button.md-raised.md-primary.modal-default-button(@click='save') 作成
@@ -42,8 +44,11 @@
             title: this.data.title,
             body: this.data.body,
           })
-          .end();
-        this.showModal = false;
+          .end((err, res) => {
+            if (res.body.status === 'OK') {
+              this.showModal = false;
+            }
+          });
       },
       close() {
         this.showModal = false;
