@@ -52,4 +52,77 @@ class DocumentController extends Controller
             ],
         ]);
     }
+
+    public function update($team_id)
+    {
+        $input = \Request::only(['id', 'body', 'title']);
+        $validator = \Validator::make($input,
+            [
+                'id'    => 'required|exists:documents,id',
+                'title' => 'required|max:40',
+                'body'  => 'required',
+            ],
+            [
+                'id.required'    => 'IDは必須項目です',
+                'id.exists'      => '指定されたIDは存在しません',
+                'title.required' => 'タイトルは必須項目です',
+                'title.max'      => 'タイトルは40文字以内に設定してください',
+                'body.required'  => '内容は必須項目です',
+            ]
+        );
+        if ($validator->fails()) {
+            return \Response::json([
+                'status'   => 'Bad Request',
+                'messages' => $validator->messages(),
+            ]);
+        }
+        $document = Document::find($input['id']);
+        $document->title = $input['title'];
+        $document->body  = $input['body'];
+        $document->save();
+        $history = History::create([
+            'document_id' => $document->id,
+            'member_id'   => \Auth::user()->id,
+        ]);
+        return \Response::json([
+            'status' => 'OK',
+            'data'   => [
+                'document' => $document,
+                'history'  => $history,
+            ],
+        ]);
+    }
+
+    public function delete($team_id)
+    {
+        $input = \Request::only(['id']);
+        $validator = \Validator::make($input,
+            [
+                'id'    => 'required|exists:documents,id',
+            ],
+            [
+                'id.required'    => 'IDは必須項目です',
+                'id.exists'      => '指定されたIDは存在しません',
+            ]
+        );
+        if ($validator->fails()) {
+            return \Response::json([
+                'status'   => 'Bad Request',
+                'messages' => $validator->messages(),
+            ]);
+        }
+        Document::destroy($input['id']);
+        $document = Document::withTrashed()->find($input['id']);
+        $history = History::create([
+            'document_id' => $document->id,
+            'member_id'   => \Auth::user()->id,
+        ]);
+        return \Response::json([
+            'status' => 'OK',
+            'data'   => [
+                'document' => $document,
+                'history'  => $history,
+            ],
+        ]);
+    }
 }
