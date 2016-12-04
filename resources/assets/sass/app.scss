@@ -7,7 +7,7 @@
 @import "variables";
 
 // Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 @import "config";
 @import "noren/src/modules/fractions.slim";
@@ -17,6 +17,10 @@
 
 * {
   font-family: "Sawarabi Gothic";
+}
+
+#global-bar {
+  margin-bottom: 2rem;
 }
 
 a {

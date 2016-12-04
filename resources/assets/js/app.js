@@ -12,6 +12,11 @@ require('./bootstrap');
  * the body of the page. From here, you may begin adding components to
  * the application, or feel free to tweak this setup for your needs.
  */
+Vue.http.interceptors.push((request, next) => {
+  request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
+
+  next();
+});
 
 const VueMaterial = require('vue-material');
 

@@ -7,9 +7,13 @@
         div.modal-wrapper
           div.modal-container(v-on:click.stop='')
             div.modal-header
-              slot(name='header') タイトル
+              slot(name='header')
+                md-input-container
+                  md-input(v-model='data.title' placeholder='タイトルを入力')
             div.modal-body
-              slot(name='body') default body
+              slot(name='body')
+                md-input-container
+                  md-textarea(v-model='data.body')
             div.modal-footer
               slot(name='footer')
                 md-button.md-raised.md-primary.modal-default-button(@click='save') 作成
@@ -21,6 +25,10 @@
     props: ['teamId'],
     data() {
       return {
+        data: {
+          title: null,
+          body: null,
+        },
         showModal: false,
       }
     },
@@ -28,10 +36,11 @@
       save() {
         request
           .post('/api/v1/team/' + this.teamId + '/document')
+          .set('X-CSRF-TOKEN', window.Laravel.csrfToken)
           .send({
             _token: window.Laravel.csrfToken,
-            title: 'title',
-            body: 'body',
+            title: this.data.title,
+            body: this.data.body,
           })
           .end();
         this.showModal = false;
