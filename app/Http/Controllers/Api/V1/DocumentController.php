@@ -92,4 +92,37 @@ class DocumentController extends Controller
             ],
         ]);
     }
+
+    public function delete($team_id)
+    {
+        $input = \Request::only(['id']);
+        $validator = \Validator::make($input,
+            [
+                'id'    => 'required|exists:documents,id',
+            ],
+            [
+                'id.required'    => 'IDは必須項目です',
+                'id.exists'      => '指定されたIDは存在しません',
+            ]
+        );
+        if ($validator->fails()) {
+            return \Response::json([
+                'status'   => 'Bad Request',
+                'messages' => $validator->messages(),
+            ]);
+        }
+        Document::destroy($input['id']);
+        $document = Document::withTrashed()->find($input['id']);
+        $history = History::create([
+            'document_id' => $document->id,
+            'member_id'   => \Auth::user()->id,
+        ]);
+        return \Response::json([
+            'status' => 'OK',
+            'data'   => [
+                'document' => $document,
+                'history'  => $history,
+            ],
+        ]);
+    }
 }
