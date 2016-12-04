@@ -7,6 +7,11 @@ use App\Http\Controllers\Controller;
 
 class TeamController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function members($team_id)
     {
         $members = TeamUser::where('team_id', $team_id);

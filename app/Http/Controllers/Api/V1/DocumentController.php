@@ -10,9 +10,15 @@ use App\Http\Requests\Api\DocumentStoreRequest;
 
 class DocumentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function create($team_id)
     {
-        $validator = \Validator::make(\Request::all(),
+        $input = \Request::only(['title', 'body']);
+        $validator = \Validator::make($input,
             [
                 'title' => 'required|max:40',
                 'body'  => 'required',
@@ -29,18 +35,14 @@ class DocumentController extends Controller
                 'messages' => $validator->messages(),
             ]);
         }
-        $input = [
-            'title' => 'hoge',
-            'body'  => 'hogegege',
-        ];
         $document = Document::create([
             'team_id' => $team_id,
-            'title'   => \Request::get('title'),
-            'body'    => \Request::get('body'),
+            'title'   => $input['title'],
+            'body'    => $input['body'],
         ]);
         $history = History::create([
             'document_id' => $document->id,
-            'user_id'     => \Auth::user()->id,
+            'member_id'   => \Auth::user()->id,
         ]);
         return \Response::json([
             'status' => 'OK',
