@@ -24,4 +24,7 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1'], function() {
     Route::post('team/{id}/document', 'DocumentController@create')
         ->where('id', '^[0-9]+$')
         ->middleware('api');
+    Route::put('team/{id}/document', 'DocumentController@update')
+        ->where('id', '^[0-9]+$')
+        ->middleware('api');
 });
