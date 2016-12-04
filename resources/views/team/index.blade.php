@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">{{ $team->display }}</div>
                 <div class="panel-body">
-
+                  <team-members team-id="{{ $team->id }}"></team-members>
                 </div>
             </div>
         </div>

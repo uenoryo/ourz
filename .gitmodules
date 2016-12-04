@@ -1,0 +1,3 @@
+[submodule "resources/assets/sass/noren"]
+	path = resources/assets/sass/noren
+	url = git@github.com:KNJ/noren.git
