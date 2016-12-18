@@ -10,18 +10,20 @@
               slot(name='header')
                 md-input-container
                   md-input(v-model='data.title' placeholder='タイトルを入力' required)
-            div.modal-body
-              slot(name='body')
-                md-input-container
-                  //- npm run prodでバグる
-                  //- md-textarea(v-model='data.body')
-                  textarea(v-model='data.body' required)
+            div.noren.noren-gl-oneline
+              div.modal-body.g-1
+                slot(name='body')
+                  textarea(:value='data.body' @input='update' placeholder='# 見出し' required)
+              div.modal-preview.g-1
+                slot(name='preview')
+                  div(v-html='markdown')
             div.modal-footer
               slot(name='footer')
                 md-button.md-raised.md-primary.modal-default-button(@click='save') 作成
 </template>
 
 <script>
+  const marked = require('marked');
   const request = require('superagent');
   export default {
     props: ['teamId'],
@@ -29,12 +31,20 @@
       return {
         data: {
           title: null,
-          body: null,
+          body: '',
         },
         showModal: false,
       }
     },
+    computed: {
+      markdown: function() {
+        return marked(this.data.body, {sanitize: true});
+      },
+    },
     methods: {
+      update: _.debounce(function(e) {
+        this.data.body = e.target.value;
+      }, 300),
       save() {
         request
           .post('/api/v1/team/' + this.teamId + '/document')
@@ -53,6 +63,9 @@
       close() {
         this.showModal = false;
       },
-    }
+    },
+    filters: {
+      marked: marked,
+    },
   }
 </script>

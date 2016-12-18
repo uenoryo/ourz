@@ -21,12 +21,13 @@ Vue.http.interceptors.push((request, next) => {
 const VueMaterial = require('vue-material');
 
 Vue.use(VueMaterial);
-Vue.material.theme.registerAll({
-  default: {
-    primary: 'teal',
-    accent: 'pink',
-  },
+Vue.material.registerTheme('default', {
+  primary: 'teal',
+  accent: 'pink',
+  warn: 'red',
+  background: 'grey',
 });
+Vue.material.setCurrentTheme('default');
 Vue.component('example', require('./components/Example.vue'));
 
 const app = new Vue({

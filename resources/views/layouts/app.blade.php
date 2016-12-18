@@ -22,7 +22,7 @@
   </script>
 </head>
 <body>
-  <div id="app" v-md-theme="'default'">
+  <div id="app">
 
     <header id="global-bar">
       <md-toolbar>

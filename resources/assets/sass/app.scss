@@ -3,12 +3,6 @@
 @import url(//fonts.googleapis.com/icon?family=Material+Icons);
 @import url(https://fonts.googleapis.com/earlyaccess/sawarabigothic.css);
 
-// Variables
-@import "variables";
-
-// Bootstrap
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
 @import "config";
 @import "noren/src/modules/fractions.slim";
 @import "noren/src/modules/range.slim";
@@ -32,4 +26,8 @@ a {
 
 .md-toolbar {
   color: #fff;
+}
+
+.block {
+  margin-bottom: 2rem;
 }

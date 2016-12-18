@@ -16,7 +16,7 @@
 }
 
 .modal-container {
-  width: 300px;
+  width: 98vw;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -33,6 +33,10 @@
 
 .modal-body {
   margin: 20px 0;
+  textarea {
+    width: 100%;
+    height: 70vh;
+  }
 }
 
 .modal-default-button {
@@ -50,6 +54,9 @@
 
 .modal-enter {
   opacity: 0;
+  .modal-container {
+    width: 0;
+  }
 }
 
 .modal-leave-active {
