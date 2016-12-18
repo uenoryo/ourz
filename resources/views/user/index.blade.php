@@ -1,38 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-
-      <div class="panel panel-default">
-        <div class="panel-heading">{{ Auth::user()->name }}のページ</div>
-        <div class="panel-body">
-          <md-button href="{{ url('/team/create') }}" class="md-raised md-primary">新しいチームを作成する</md-button>
-        </div>
+<div class="noren noren-outermost">
+  <div class="block g-1">
+    <md-whiteframe md-elevation="2">
+      <md-toolbar class="md-dense">
+        <h2 class="md-title">{{ Auth::user()->name }}のページ</h2>
+      </md-toolbar>
+      <div>
+        <md-button href="{{ url('/team/create') }}" class="md-raised md-primary">新しいチームを作成する</md-button>
       </div>
-
-      <div class="panel panel-default">
-        <div class="panel-heading">{{ Auth::user()->name }}のチーム</div>
-        <div class="panel-body">
-          <table>
-            <tr>
-              <th>チームID</th>
-              <th>チーム名</th>
-            </tr>
-            @forelse($teams as $team)
-            <tr>
-              <td><a href="{{ route('team', $team->name) }}">{{ $team->name }}</a></td>
-              <td><a href="{{ route('team', $team->name) }}">{{ $team->display }}</a></td>
-            </tr>
-            @empty
-              <tr><td>チームはありません</td></tr>
-            @endforelse
-          </table>
-        </div>
-      </div>
-
-    </div>
+    </md-whiteframe>
+  </div>
+  <div class="block g-1">
+    <md-whiteframe md-elevation="2">
+      <md-toolbar class="md-dense">
+        <h2 class="md-title">{{ Auth::user()->name }}のチーム</h2>
+      </md-toolbar>
+      <md-list>
+        @forelse($teams as $team)
+          <md-list-item>
+            <a href="{{ route('team', $team->name) }}">{{ $team->display }}</a>
+          </md-list-item>
+        @empty
+          <md-list-item>
+            <p>チームはまだありません</p>
+          </md-list-item>
+        @endforelse
+      </md-list>
+    </md-whiteframe>
   </div>
 </div>
 @endsection

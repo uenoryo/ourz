@@ -12,19 +12,29 @@ require('./bootstrap');
  * the body of the page. From here, you may begin adding components to
  * the application, or feel free to tweak this setup for your needs.
  */
+Vue.http.interceptors.push((request, next) => {
+  request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
+
+  next();
+});
 
 const VueMaterial = require('vue-material');
 
 Vue.use(VueMaterial);
-Vue.material.theme.registerAll({
-  default: {
-    primary: 'teal',
-    accent: 'pink',
-  },
+Vue.material.registerTheme('default', {
+  primary: 'teal',
+  accent: 'pink',
+  warn: 'red',
+  background: 'grey',
 });
+Vue.material.setCurrentTheme('default');
 Vue.component('example', require('./components/Example.vue'));
-Vue.component('team-members', require('./components/team-members.vue'));
 
 const app = new Vue({
-    el: '#app',
+  el: '#app',
+  showModal: false,
+  components: {
+    'create-document': require('./components/button/create-document.vue'),
+    'team-members': require('./components/team-members.vue'),
+  },
 });
